@@ -9,7 +9,7 @@ using User.Service.Infrastructure.EF.Tables;
 using RepoExt = User.Service.Infrastructure.EF.Repositories;
 using DomainExt = User.Service.Domain.Interface.Models;
 
-namespace User.Service.Infrastructure.EF.Tests.Repositories.PublicRepository
+namespace User.Service.Infrastructure.EF.Tests.Repositories.UserRepository
 {
 	/// <summary>
 	/// Тесты на <see cref="IUserRepository.SimpleCreateUserAsync(string, string)"/>
