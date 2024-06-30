@@ -16,6 +16,7 @@ namespace User.Service.Application.V10.Registration.Validators
 		public SignUpRequestValidator()
 		{
 			RuleFor(request => request.Email)
+				.Cascade(CascadeMode.StopOnFirstFailure)
 				.NotNull()
 				.NotEmpty()
 				.WithMessage("Электронная почта обязательный параметр")
@@ -27,9 +28,12 @@ namespace User.Service.Application.V10.Registration.Validators
 				.WithMessage("Электронная почта должна соответствовать шаблону example@example.example");
 
 			RuleFor(request => request.Password)
+				.Cascade(CascadeMode.StopOnFirstFailure)
 				.NotNull()
 				.NotEmpty()
-				.WithMessage("Пароль обязательный параметр");
+				.WithMessage("Пароль обязательный параметр")
+				.Must(x => x.Count() >= 8)
+				.WithMessage("Пароль должен содержать не менее 8 символов");
 		}
 	}
 }
