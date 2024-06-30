@@ -19,8 +19,7 @@ namespace User.Service.API
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-			// Добавление поддержки Mediatr для проекта User.Service.Application.V10
-			builder.Services.AddMediatrV10Extension();
+			#region API
 			// Add services to the container
 			builder.Services.AddControllers();
 			// Добавление версионирования
@@ -33,9 +32,22 @@ namespace User.Service.API
 			builder.Services.AddHealthChecks();
 			// Добавление возможности работы с JWT
 			builder.Services.AddAuthJwt(builder.Configuration);
-
 			// Добавление работы с логером
 			builder.Logging.AddLoggingExtension(builder.Environment.IsDevelopment());
+			#endregion
+
+			#region Application
+			// Добавление поддержки Mediatr для проекта User.Service.Application.V10
+			builder.Services.AddMediatrV10Extension();
+			// Добавление поддержки валидаторов для проекта User.Service.Application.V10
+			builder.Services.AddValidatorV10Extension();
+			#endregion
+
+			#region Infrastructure
+			builder.Services.AddRepositoryExtension();
+			builder.Services.AddPublicDbContextExtension(builder.Configuration.GetConnectionString("PublicDB"));
+			builder.Services.AddGeneralDbContextExtension(builder.Configuration.GetConnectionString("GeneralDB"));
+			#endregion
 
 			var app = builder.Build();
 

@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using User.Service.Application.V10.Registration.DTO;
+using User.Service.Application.V10.Registration.Validators;
 
 namespace User.Service.Application.V10
 {
@@ -22,6 +20,18 @@ namespace User.Service.Application.V10
 		{
 			_ = services.AddMediatR(conf =>
 				conf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+			return services;
+		}
+
+		/// <summary>
+		/// Добавление поддержки валидаторов моделей
+		/// </summary>
+		/// <param name="services"><see cref="IServiceCollection"/></param>
+		/// <returns><see cref="IServiceCollection"/></returns>
+		public static IServiceCollection AddValidatorV10Extension(this IServiceCollection services)
+		{
+			services.AddScoped<IValidator<SignUpRequestDTO>, SignUpRequestValidator>();
 
 			return services;
 		}
