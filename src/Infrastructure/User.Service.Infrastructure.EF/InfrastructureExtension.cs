@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using User.Service.Domain.Interface.Repositories;
 using User.Service.Infrastructure.EF;
 using User.Service.Infrastructure.EF.Repositories;
 
+[assembly: InternalsVisibleTo("User.Service.Infrastructure.EF.Tests")]
 namespace User.Service.Application.V10
 {
 	/// <summary>
