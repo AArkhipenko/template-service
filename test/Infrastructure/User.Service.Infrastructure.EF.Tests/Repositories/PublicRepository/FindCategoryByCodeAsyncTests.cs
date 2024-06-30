@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using User.Service.Domain.Core.Exceptions;
 using User.Service.Domain.Interface.Repositories;
 using User.Service.Infrastructure.EF.Tables;
+
 using RepoExt = User.Service.Infrastructure.EF.Repositories;
 
 namespace User.Service.Infrastructure.EF.Tests.Repositories.PublicRepository

@@ -5,7 +5,7 @@ namespace User.Service.Application.V10.Registration.Commands
 	/// <summary>
 	/// Комманда регистрации пользователя
 	/// </summary>
-	public class SignUpCommand : IRequest<Unit>
+	public class SignUpCommand : IRequest<int>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SignUpCommand"/> class.

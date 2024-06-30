@@ -28,7 +28,7 @@ namespace User.Service.Infrastructure.EF.Repositories
 		}
 
 		/// <inheritdoc/>
-		public async Task SimpleCreateUserAsync(string email, string password)
+		public async Task<int> SimpleCreateUserAsync(string email, string password)
 		{
 			var category = await this._publicRepository.FindCategoryByCodeAsync(UserCategoryCode);
 
@@ -43,6 +43,8 @@ namespace User.Service.Infrastructure.EF.Repositories
 
 			await this._context.Users.AddAsync(model);
 			await this._context.SaveChangesAsync();
+
+			return model.Id;
 		}
 	}
 }

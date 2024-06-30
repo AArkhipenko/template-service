@@ -11,7 +11,7 @@ namespace User.Service.Application.V10.Registration.Hadlers
 	/// <summary>
 	/// Выполнение <see cref="SignUpCommand"/>
 	/// </summary>
-	internal class SignUpCommandHandler : LoggerWrapper, IRequestHandler<SignUpCommand, Unit>
+	internal class SignUpCommandHandler : LoggerWrapper, IRequestHandler<SignUpCommand, int>
 	{
 		private readonly IUserRepository _userRepository;
 
@@ -31,12 +31,12 @@ namespace User.Service.Application.V10.Registration.Hadlers
 		}
 
 		/// <inheritdoc/>
-		public async Task<Unit> Handle(SignUpCommand request, CancellationToken cancellationToken)
+		public async Task<int> Handle(SignUpCommand request, CancellationToken cancellationToken)
 		{
 			using (_ = base.BeginLoggingScope())
 			{
-				await this._userRepository.SimpleCreateUserAsync(request.Email, request.Password);
-				return Unit.Value;
+				var result = await this._userRepository.SimpleCreateUserAsync(request.Email, request.Password);
+				return result;
 			}
 		}
 	}

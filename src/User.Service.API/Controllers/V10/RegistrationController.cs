@@ -44,9 +44,9 @@ namespace User.Service.API.Controllers.V10
 		/// </summary>
 		/// <param name="request"><see cref="SignUpRequestDTO"/></param>
 		/// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-		/// <returns>Список случайных чисел</returns>
+		/// <returns>ИД созданного пользователя</returns>
 		[HttpPost("sign-up")]
-        public async Task<IActionResult> SignUpAsync(
+        public async Task<ActionResult<int>> SignUpAsync(
 			[FromBody] SignUpRequestDTO request,
 			CancellationToken cancellationToken = default)
         {
@@ -63,8 +63,8 @@ namespace User.Service.API.Controllers.V10
 					throw new BadRequestException(string.Join("; ", validationResult.Errors.Select(x => x.ErrorMessage)));
 				}
 
-				await this._mediator.Send(new SignUpCommand(request.Email, request.Password), cancellationToken);
-				return NoContent();
+				var result = await this._mediator.Send(new SignUpCommand(request.Email, request.Password), cancellationToken);
+				return Ok(result);
 			}
 		}
 	}

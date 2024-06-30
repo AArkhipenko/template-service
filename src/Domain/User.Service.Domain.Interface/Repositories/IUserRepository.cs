@@ -11,6 +11,6 @@
 		/// <param name="email">электронная почта</param>
 		/// <param name="password">пароль</param>
 		/// <returns><see cref="Task"/></returns>
-		Task SimpleCreateUserAsync(string email, string password);
+		Task<int> SimpleCreateUserAsync(string email, string password);
     }
 }
