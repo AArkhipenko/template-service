@@ -33,14 +33,30 @@ namespace User.Service.API.Controllers.V10
 		}
 
 		/// <summary>
-		/// Тестовый метод получения данных
+		/// Тестовый метод получения данных для пользователя с ролью администратор
 		/// </summary>
 		/// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-		/// <returns>Список случайных чисел</returns>
-		[HttpGet]
-        public Task<IActionResult> GetAsync(CancellationToken cancellationToken)
-        {
-			using(_ = base.BeginLoggingScope())
+		/// <returns>Ничего</returns>
+		[HttpGet("for-admin")]
+		[Authorize("AdminRole")]
+		public Task<IActionResult> GetAdminAsync(CancellationToken cancellationToken)
+		{
+			using (_ = base.BeginLoggingScope())
+			{
+				return Task.FromResult<IActionResult>(Ok());
+			}
+		}
+
+		/// <summary>
+		/// Тестовый метод получения данных для пользователя с ролью администратор
+		/// </summary>
+		/// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+		/// <returns>Ничего</returns>
+		[HttpGet("for-user")]
+		[Authorize("UserRole")]
+		public Task<IActionResult> GetUserAsync(CancellationToken cancellationToken)
+		{
+			using (_ = base.BeginLoggingScope())
 			{
 				return Task.FromResult<IActionResult>(Ok());
 			}
