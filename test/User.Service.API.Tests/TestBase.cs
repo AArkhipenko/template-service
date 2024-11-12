@@ -38,7 +38,8 @@ namespace User.Service.API.Tests
 		/// </summary>
 		/// <param name="configureServices">метод настройки DI</param>
 		/// <returns><see cref="HttpClient"/></returns>
-		public static HttpClient CreateClient(Action<IServiceCollection> configureServices) {
+		public static HttpClient CreateClient(Action<IServiceCollection> configureServices)
+		{
 			var server = new WebApplicationFactory<Program>()
 				.WithWebHostBuilder(builder =>
 				{
@@ -60,7 +61,7 @@ namespace User.Service.API.Tests
 				.AddJsonFile("appsettings.Test.json")
 				.Build();
 
-			var jwtTokenSettings = configuration.GetSection("JwtTokenSettings").Get<JwtTokenSettings>();
+			var jwtTokenSettings = configuration.GetSection("JwtTokenSettings").Get<KeycloakSettings>();
 			if (jwtTokenSettings is null)
 			{
 				throw new Exception("Не найдена секция настройки JWT");
@@ -83,9 +84,9 @@ namespace User.Service.API.Tests
 		/// <summary>
 		/// Генерация не настоящего JWT-токена
 		/// </summary>
-		/// <param name="jwtTokenSettings"><inheritdoc cref="JwtTokenSettings" path="/summary"/></param>
+		/// <param name="jwtTokenSettings"><inheritdoc cref="KeycloakSettings" path="/summary"/></param>
 		/// <returns>JWT-токен</returns>
-		private static string GenerateFakeToken(JwtTokenSettings jwtTokenSettings)
+		private static string GenerateFakeToken(KeycloakSettings jwtTokenSettings)
 		{
 
 			var claims = new List<Claim>() {
@@ -93,12 +94,12 @@ namespace User.Service.API.Tests
 				new Claim(JwtRegisteredClaimNames.UniqueName, "FakeUniqueUser"),
 			};
 
-			var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenSettings.SecretKey));
+			var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecriteKeySecriteKeySecriteKeySecriteKeySecriteKey"));
 			var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
 			var tokeOptions = new JwtSecurityToken(
-				issuer: jwtTokenSettings.Issuer,
-				audience: jwtTokenSettings.Audience,
+				issuer: "Issuer",
+				audience: "Audience",
 				claims: claims,
 				expires: DateTime.UtcNow.AddHours(24),
 				signingCredentials: signinCredentials
